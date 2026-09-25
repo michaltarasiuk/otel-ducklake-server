@@ -5,14 +5,7 @@ import { isRecord } from '../utils/is-record.js'
 import { opentelemetry } from './generated/root.js'
 
 export type OtlpSignal = 'traces' | 'metrics' | 'logs'
-
 export type OtlpEncoding = 'json' | 'protobuf'
-
-export interface DecodedExport {
-  signal: OtlpSignal
-  encoding: OtlpEncoding
-  body: Record<string, unknown>
-}
 
 export class OtlpProtocolError extends Error {
   readonly status: 400 | 413 | 415
@@ -122,6 +115,8 @@ export function decodeExportRequest(signal: OtlpSignal, encoding: OtlpEncoding, 
     throw new OtlpProtocolError(400, message)
   }
 }
+
+export type DecodedExport = ReturnType<typeof decodeExportRequest>
 
 export function encodeSuccessResponse(signal: OtlpSignal, encoding: OtlpEncoding) {
   const config = SIGNALS[signal]
