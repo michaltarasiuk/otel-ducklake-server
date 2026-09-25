@@ -25,6 +25,7 @@ export function createOtlpExportHandler(signal: OtlpSignal, sink: OtlpSink = noo
     try {
       const encoding = resolveEncoding(c.req.header('content-type'))
       const bytes = await readOtlpBody(c.req.raw)
+
       const decoded = decodeExportRequest(signal, encoding, bytes)
       await sink.accept(decoded)
 
