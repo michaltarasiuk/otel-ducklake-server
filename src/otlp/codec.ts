@@ -73,9 +73,7 @@ export function resolveEncoding(contentTypeHeader: string | undefined) {
 }
 
 export function contentTypeFor(encoding: OtlpEncoding) {
-  return new ContentType({
-    mediaType: encoding === 'json' ? 'application/json' : 'application/x-protobuf',
-  }).toString()
+  return encoding === 'json' ? 'application/json' : 'application/x-protobuf'
 }
 
 export function decodeExportRequest(signal: OtlpSignal, encoding: OtlpEncoding, bytes: Uint8Array) {
